@@ -31,7 +31,6 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./rezSign.jks
 
-      -
 
       #      - name: Decode and Save Keystore
       #        run: |
