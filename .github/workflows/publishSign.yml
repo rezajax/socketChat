@@ -34,7 +34,7 @@ jobs:
       
       - name: file jks
         run: |
-          ls -ltrh
+          ls -ltrh $HOME/
           file $HOME/my-release-key.jks
           cat $HOME/my-release-key.jks
 
