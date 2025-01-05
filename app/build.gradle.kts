@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "ir.rezajax.socketchat"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ir.rezajax.socketchat"
