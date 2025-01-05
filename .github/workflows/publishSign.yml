@@ -37,7 +37,7 @@ jobs:
 #
       - name: file jks
         run: |
-          howami
+          whoami
           file $HOME/my-release-key.jks
           cat $HOME/my-release-key.jks
 
