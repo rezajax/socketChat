@@ -54,9 +54,9 @@ jobs:
         with:
           artifacts: app/build/outputs/apk/nightly/app-nightly.apk
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.run_number }}-$(date +'%Y-%m-%d')
+          tag: nightly-${{ github.run_number }}-$(date +'%y%m%d')  # Shortened date format
           name: Release ${{ github.run_number }}-$(date +'%Y-%m-%d')
-#          tag: ${{ github.ref_name }}
+          #          tag: ${{ github.ref_name }}
 #          name: Release ${{ github.ref_name }}
           body: |
             This release includes the latest changes in the application.
