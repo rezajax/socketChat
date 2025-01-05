@@ -34,7 +34,7 @@ jobs:
       
       - name: file jks
         run: |
-          pwd
+          cd $HOME && pwd
           file $HOME/my-release-key.jks
           cat $HOME/my-release-key.jks
 
