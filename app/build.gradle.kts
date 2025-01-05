@@ -44,9 +44,9 @@ android {
     signingConfigs {
         create("nightly") {
             storeFile = rootProject.file("rezSign.jks")
-            storePassword = "android"
-            keyAlias = "androiddebugkey"
-            keyPassword = "android"
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
 
@@ -79,7 +79,7 @@ android {
             )
             isMinifyEnabled = true
             isShrinkResources = true
-            buildConfigField("boolean", "DEVELOPMENT", "false")
+            buildConfigField("boolean", "DEVELOPMENT",  "false")
         }
     }
 

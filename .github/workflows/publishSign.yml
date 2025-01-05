@@ -39,6 +39,10 @@ jobs:
       #
 
 
+      - run: ls -ltrh
+
+
+
       - name: Grant execute permission for Gradlew
         run: chmod +x ./gradlew
 
