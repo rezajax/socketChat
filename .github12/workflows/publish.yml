@@ -31,8 +31,10 @@ jobs:
         with:
           artifacts: app/build/outputs/apk/release/app-release.apk
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }} # از تگ مرتبط با برنچ استفاده می‌کند
-          name: Release ${{ github.ref_name }}
+          tag: ${{ github.run_number }}-$(date +'%Y-%m-%d')
+          name: Release ${{ github.run_number }}-$(date +'%Y-%m-%d')
+#          tag: ${{ github.ref_name }}
+#          name: Release ${{ github.ref_name }}
           body: |
             This release includes the latest changes in the application.
           draft: false

@@ -35,9 +35,73 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true // Enable BuildConfig feature
         compose = true
     }
+
+    val gitInfo = "0.1"
+
+    signingConfigs {
+        create("nightly") {
+            storeFile = rootProject.file("rezSign.jks")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+    tasks.register("ali") {
+        group = "alireza"
+        println("hi ali")
+    }
+
+
+    buildTypes {
+        create("nightly") {
+            signingConfig = signingConfigs.getByName("nightly")
+            versionNameSuffix = "-${defaultConfig.versionName}-$gitInfo-nightly"
+            applicationIdSuffix = ".nightly"
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            isMinifyEnabled = true
+            isShrinkResources = true
+            buildConfigField("boolean", "DEVELOPMENT", "true")
+        }
+
+        getByName("debug") {
+            versionNameSuffix = "-${defaultConfig.versionName}-$gitInfo"
+            buildConfigField("boolean", "DEVELOPMENT", "true")
+            applicationIdSuffix = ".debug"
+        }
+
+        getByName("release") {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+            isMinifyEnabled = true
+            isShrinkResources = true
+            buildConfigField("boolean", "DEVELOPMENT", "false")
+        }
+    }
+
+
+
+
+//    testOptions.unitTests.all { it.useJUnitPlatform() }
+
+/*    buildTypes {
+        create("nightly") {
+            signingConfig = signingConfigs.getByName("nightly")
+            versionNameSuffix = "-${defaultConfig.versionName}-$gitInfo-nightly"
+            applicationIdSuffix = ".nightly"
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
+            isMinifyEnabled = true
+            isShrinkResources = true
+            buildConfigField("boolean", "DEVELOPMENT", "true")
+        }
+
+    }*/
 }
+
 
 dependencies {
 
@@ -57,3 +121,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+

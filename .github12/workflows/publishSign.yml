@@ -27,20 +27,15 @@ jobs:
       # behind priject
       - name: Decode and Save Keystore
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./my-release-key.jks
-      
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./rezSign.jks
+
+      -
 
       #      - name: Decode and Save Keystore
       #        run: |
       #          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > $HOME/my-release-key.jks
       #
       #
-      - name: file jks
-        run: |
-          ls -ltrh $HOME
-          file $HOME/my-release-key.jks
-          cat $HOME/my-release-key.jks
-
 
 
       - name: Grant execute permission for Gradlew
@@ -51,15 +46,17 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleNightly
 
       - name: Upload APK to GitHub Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: app/build/outputs/apk/release/app-release.apk
+          artifacts: app/build/outputs/apk/nightly/app-nightly.apk
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
+          tag: ${{ github.run_number }}-$(date +'%Y-%m-%d')
+          name: Release ${{ github.run_number }}-$(date +'%Y-%m-%d')
+#          tag: ${{ github.ref_name }}
+#          name: Release ${{ github.ref_name }}
           body: |
             This release includes the latest changes in the application.
           draft: false
