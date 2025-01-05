@@ -32,7 +32,11 @@ jobs:
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > $HOME/my-release-key.jks
 
       
-
+      - name: file jks
+        run: |
+          ls -ltrh
+          file $HOME/my-release-key.jks
+          cat $HOME/my-release-key.jks
 
 
 
