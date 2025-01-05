@@ -1,0 +1,39 @@
+
+name: Publish Android App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21' # نسخه جاوا مورد نیاز پروژه
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
+      - name: Upload APK to GitHub Releases
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          artifacts: app/build/outputs/apk/release/app-release.apk
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }} # از تگ مرتبط با برنچ استفاده می‌کند
+          name: Release ${{ github.ref_name }}
+          body: |
+            This release includes the latest changes in the application.
+          draft: false
+          prerelease: false
